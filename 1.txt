@@ -1,0 +1,42 @@
+import React, {createContext, Fragment, useEffect, useRef, useState} from 'react';
+
+const Context = createContext()
+function Sub(props){
+	return (
+		<Context.Consumer>
+			{
+				({num,childFn})=> (
+						<>
+							<h2>{num}</h2>
+							<button onClick={()=>childFn(3)}>累加</button>
+						</>
+				)
+			}
+		</Context.Consumer>
+	)
+}
+function Father(props){
+	return <Sub/>
+}
+function App1(props) {
+	const [num,setNum] = useState(1)
+	const childFn = (arg)=>{
+		setNum(num+arg)
+	}
+	return (
+			<Context.Provider value={{num,childFn}}>
+				<Father />
+			</Context.Provider>
+	);
+}
+
+export default App1;
+/*
+* useEffect -> 模拟三个生命周期
+* mounted(componentDidMount)
+*  updated(componentDidUpdated)
+*  beforeDestory(componentWillUnmount)
+*
+* useRef 用来获取元素或组件
+*  */
+
